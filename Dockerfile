@@ -1,13 +1,7 @@
 FROM ubuntu:16.04
 
 MAINTAINER Cédric Billiet <cedricbilliet@gmail.com>
-
 RUN apt-get -y update && apt-get install -y php
-RUN yes | pecl install -o -f xdebug \
-          && rm -rf /tmp/pear \
-          && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini \
-          && echo "xdebug.remote_enable=on"  >> /usr/local/etc/php/conf.d/xdebug.ini \
-          && echo "xdebug.remote_host=10.1.0.133" >> /usr/local/etc/php/conf.d/xdebug.ini \
-          && echo "xdebug.remote_connect_back=On" >> /usr/local/etc/php/conf.d/xdebug.ini \
-          && echo "memory_limit = 64M" > /usr/local/etc/php/conf.d/php.ini \
-          && echo "xdebug.remote_autostart = 1" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN apt-get install -y php-xdebug wget
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | php -- --quiet
+RUN mv composer.phar /usr/local/bin/composer
