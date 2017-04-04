@@ -32,9 +32,10 @@ language: generic
 before_install:
 - docker pull scips/dockerphp
 install:
-- mkdir -p /home/travis/build/RTBF/cryo-library/coverage/cov
 - docker run -dit --name="dockerphp" -v /home/travis/build/<travis-clone-folder>:<docker-folder> scips/dockerphp /bin/bash
 - docker ps -a
+- docker exec dockerphp /bin/bash -c "mkdir ~/.ssh"
+- docker exec dockerphp /bin/bash -c "mkdir ~/coverage"
 - docker exec dockerphp /bin/bash -c "composer self-update"
 - cat ~/.ssh/id_
 - docker exec dockerphp /bin/bash -c "cd <docker-folder>;composer install"
